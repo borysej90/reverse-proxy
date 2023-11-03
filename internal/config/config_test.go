@@ -25,13 +25,17 @@ server:
   paths:
     - location: /
       target: http://127.0.0.1:8081
+      connection_limit: 100
+      drop_over_limit: true
 `,
 			expected: Config{Server: server{
 				Listen: "8080",
 				Paths: []path{
 					{
-						Location: "/",
-						Target:   "http://127.0.0.1:8081",
+						Location:        "/",
+						Target:          "http://127.0.0.1:8081",
+						ConnectionLimit: 100,
+						DropOverLimit:   true,
 					},
 				},
 			}},

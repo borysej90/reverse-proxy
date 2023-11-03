@@ -6,18 +6,19 @@ import (
 )
 
 type path struct {
-	Location        string
-	Target          string
-	ConnectionLimit int
+	Location        string `yaml:"location"`
+	Target          string `yaml:"target"`
+	ConnectionLimit int    `yaml:"connection_limit"`
+	DropOverLimit   bool   `yaml:"drop_over_limit"`
 }
 
 type server struct {
-	Listen string
-	Paths  []path
+	Listen string `yaml:"listen"`
+	Paths  []path `yaml:"paths"`
 }
 
 type Config struct {
-	Server server
+	Server server `yaml:"server"`
 }
 
 func FromYaml(yamlReader io.Reader) (cfg Config, err error) {
