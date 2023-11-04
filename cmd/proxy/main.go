@@ -1,13 +1,13 @@
 package main
 
 import (
+	"github.com/borysej90/reverse-proxy/internal/config"
+	"github.com/borysej90/reverse-proxy/internal/limiter"
 	"log"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
 	"os"
-	"proxy/internal/config"
-	"proxy/internal/limiter"
 )
 
 func main() {
