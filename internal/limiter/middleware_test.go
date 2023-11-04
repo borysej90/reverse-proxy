@@ -48,11 +48,11 @@ func TestLimiter_ServeHTTP(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			h := &mockHandler{}
 			limiter := New(tt.maxReqs, h, tt.dropOverLimit)
-			// we expect a non-blocking ServerHTTP to be called tt.maxReqs number of times
+			// we expect a non-blocking ServerHTTP to be called the tt.maxReqs number of times
 			nonBlockedCalls := h.On("ServeHTTP", mock.Anything, mock.Anything).Times(tt.maxReqs)
 			var lastCallTime, lastReturnTime time.Time
 			if !tt.dropOverLimit {
-				// if limiter is configured to not drop limit-exceeding requests then we expect another call to
+				// if Limiter is configured not to drop limit-exceeding requests, then we expect another call to
 				// ServeHTTP but not before the previous ones. This one will be delayed due to the limit.
 				h.On("ServeHTTP", mock.Anything, mock.Anything).NotBefore(nonBlockedCalls).Run(func(_ mock.Arguments) {
 					lastReturnTime = time.Now() // record the time of the delayed request actual execution
@@ -69,7 +69,7 @@ func TestLimiter_ServeHTTP(t *testing.T) {
 			}
 			wg.Wait()
 			if !tt.dropOverLimit {
-				// if limiter is configured to not drop limit-exceeding requests then we expect the time delta between
+				// if Limiter is configured not to drop limit-exceeding requests, then we expect the time delta between
 				// the request start and its execution to be at least the amount of time the mock request handler sleeps
 				// for [line:19]
 				delta := lastReturnTime.Sub(lastCallTime)
